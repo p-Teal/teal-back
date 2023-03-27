@@ -33,6 +33,7 @@ const register = async (req, res) => {
     voluntario: {
       nome: voluntario.nome,
       cpf: voluntario.cpf,
+      admin: voluntario.admin,
     },
   });
 };
