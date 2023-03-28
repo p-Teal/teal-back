@@ -5,6 +5,11 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import { connect } from "mongoose";
 
+import helmet from "helmet";
+import xss from "xss-clean";
+import mongoSanitize from "express-mongo-sanitize";
+import cookieParser from "cookie-parser";
+
 import authRouter from "./routes/authRoutes.js";
 
 // middlewares
@@ -20,12 +25,25 @@ if (process.env.NODE_ENV === "dev") {
 
 const port = process.env.PORT || 5000;
 
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL);
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
+
 app.use(
   cors({
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );
 app.use(express.json());
+app.use(cookieParser());
+app.use(helmet());
+app.use(xss());
+app.use(mongoSanitize());
 
 app.get("/api/v1", (req, res) => {
   res.json({ mensagem: "API V1" });

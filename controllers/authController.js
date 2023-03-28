@@ -50,16 +50,16 @@ const login = async (req, res) => {
   }).select("+senha");
 
   if (!voluntario) {
-    throw new AuthError("CPF ou senha incorretos");
+    throw new BadReqError("Credenciais inválidas");
   }
 
   const senhaCorreta = await voluntario.compararSenha(senha);
   if (!senhaCorreta) {
-    throw new AuthError("CPF ou senha incorretos");
+    throw new BadReqError("Credenciais inválidas");
   }
 
   if (!voluntario.ativo) {
-    throw new AuthError("Voluntário não está ativo");
+    throw new AuthError("Voluntário não está ativo, entre em contato com o administrador.");
   }
 
   const token = voluntario.createJWT();
