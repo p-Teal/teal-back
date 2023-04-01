@@ -210,10 +210,14 @@ const desativarVoluntario = async (req, res) => {
 };
 
 const getVoluntarios = async (req, res) => {
-  const voluntarios = await Voluntario.find();
+  //TODO ADMIN ONLY
+  const voluntarios = await Voluntario.find({ admin: false });
+
+  const totalVoluntarios = await Voluntario.countDocuments();
 
   res.status(StatusCodes.OK).json({
     voluntarios,
+    totalVoluntarios,
   });
 };
 

@@ -18,8 +18,8 @@ router.route("/login").post(login);
 router.route("/logout").get(logout);
 router.route("/updateVoluntario").patch(auth, updateVoluntario);
 router.route("/getVoluntario").get(auth, getVoluntario);
-router.route("/ativarVoluntario/:cpf").get(ativarVoluntario);
-router.route("/desativarVoluntario/:cpf").get(desativarVoluntario);
-router.route("/getVoluntarios").get(getVoluntarios);
+router.route("/ativarVoluntario/:cpf").post(auth, ativarVoluntario);
+router.route("/desativarVoluntario/:cpf").post(auth, desativarVoluntario);
+router.route("/getVoluntarios").get(auth, getVoluntarios);
 
 export default router;

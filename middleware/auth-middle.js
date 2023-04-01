@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 import { AuthError } from "../errors/index.js";
 
 const auth = async (req, res, next) => {
-  console.log(req.cookies, 'cookies');
   const token = req.cookies.token;
   if (!token) {
     throw new AuthError("Autenticação necessária");
