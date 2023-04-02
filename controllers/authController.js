@@ -59,7 +59,9 @@ const login = async (req, res) => {
   }
 
   if (!voluntario.ativo) {
-    throw new AuthError("Voluntário não está ativo, entre em contato com o administrador.");
+    throw new AuthError(
+      "Voluntário não está ativo, entre em contato com o administrador."
+    );
   }
 
   const token = voluntario.createJWT();
@@ -161,6 +163,26 @@ const getVoluntario = async (req, res) => {
   });
 };
 
+const getVoluntarioById = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    throw new BadReqError("ID não informado");
+  }
+
+  const voluntario = await Voluntario.findOne({
+    _id: id,
+  });
+
+  if (!voluntario) {
+    throw new BadReqError("Voluntário não encontrado");
+  }
+
+  res.status(StatusCodes.OK).json({
+    voluntario,
+  });
+};
+
 const ativarVoluntario = async (req, res) => {
   const { cpf } = req.params;
 
@@ -213,11 +235,37 @@ const getVoluntarios = async (req, res) => {
   //TODO ADMIN ONLY
   const voluntarios = await Voluntario.find({ admin: false });
 
-  const totalVoluntarios = await Voluntario.countDocuments();
+  const totalVoluntarios = await Voluntario.countDocuments({ admin: false });
 
   res.status(StatusCodes.OK).json({
     voluntarios,
     totalVoluntarios,
+  });
+};
+
+const deleteVoluntario = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    throw new BadReqError("ID não informado");
+  }
+
+  if (req.voluntario.voluntarioId === id) {
+    throw new BadReqError("Ação não permitida");
+  }
+
+  const voluntario = await Voluntario.findOne({
+    _id: id,
+  });
+
+  if (!voluntario) {
+    throw new BadReqError("Voluntário não encontrado");
+  }
+
+  await voluntario.remove();
+
+  res.status(StatusCodes.OK).json({
+    mensagem: "Voluntário deletado com sucesso",
   });
 };
 
@@ -230,4 +278,6 @@ export {
   ativarVoluntario,
   desativarVoluntario,
   getVoluntarios,
+  getVoluntarioById,
+  deleteVoluntario,
 };

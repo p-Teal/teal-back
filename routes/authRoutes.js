@@ -10,6 +10,8 @@ import {
   ativarVoluntario,
   desativarVoluntario,
   getVoluntarios,
+  getVoluntarioById,
+  deleteVoluntario,
 } from "../controllers/authController.js";
 import auth from "../middleware/auth-middle.js";
 
@@ -21,5 +23,7 @@ router.route("/getVoluntario").get(auth, getVoluntario);
 router.route("/ativarVoluntario/:cpf").post(auth, ativarVoluntario);
 router.route("/desativarVoluntario/:cpf").post(auth, desativarVoluntario);
 router.route("/getVoluntarios").get(auth, getVoluntarios);
+router.route("/getVoluntarioById/:id").get(auth, getVoluntarioById);
+router.route("/deleteVoluntario/:id").delete(auth, deleteVoluntario);
 
 export default router;
