@@ -178,8 +178,15 @@ const getVoluntarioById = async (req, res) => {
     throw new BadReqError("Voluntário não encontrado");
   }
 
+  const value = new Date(voluntario.createdAt).toLocaleString("pt-BR", {
+    timeZone: "America/Sao_Paulo",
+  });
+
   res.status(StatusCodes.OK).json({
-    voluntario,
+    voluntario: {
+      ...voluntario._doc,
+      createdAt: value,
+    },
   });
 };
 
@@ -233,7 +240,8 @@ const desativarVoluntario = async (req, res) => {
 
 const getVoluntarios = async (req, res) => {
   //TODO ADMIN ONLY
-  const voluntarios = await Voluntario.find({ admin: false });
+  const voluntarios = await Voluntario.find({ admin: false })
+    .sort({ createdAt: -1 });
 
   const totalVoluntarios = await Voluntario.countDocuments({ admin: false });
 
@@ -244,25 +252,29 @@ const getVoluntarios = async (req, res) => {
 };
 
 const deleteVoluntario = async (req, res) => {
-  const { id } = req.params;
+  const { cpf } = req.params;
 
-  if (!id) {
-    throw new BadReqError("ID não informado");
-  }
-
-  if (req.voluntario.voluntarioId === id) {
-    throw new BadReqError("Ação não permitida");
+  if (!cpf) {
+    throw new BadReqError("CPF não informado");
   }
 
   const voluntario = await Voluntario.findOne({
-    _id: id,
+    cpf,
   });
 
   if (!voluntario) {
     throw new BadReqError("Voluntário não encontrado");
   }
 
-  await voluntario.remove();
+  if (req.voluntario.voluntarioId === voluntario._id) {
+    throw new BadReqError("Ação não permitida");
+  }
+
+  console.log(voluntario);
+
+  await voluntario.deleteOne({
+    cpf,
+  })
 
   res.status(StatusCodes.OK).json({
     mensagem: "Voluntário deletado com sucesso",

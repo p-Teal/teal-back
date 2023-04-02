@@ -24,6 +24,6 @@ router.route("/ativarVoluntario/:cpf").post(auth, ativarVoluntario);
 router.route("/desativarVoluntario/:cpf").post(auth, desativarVoluntario);
 router.route("/getVoluntarios").get(auth, getVoluntarios);
 router.route("/getVoluntarioById/:id").get(auth, getVoluntarioById);
-router.route("/deleteVoluntario/:id").delete(auth, deleteVoluntario);
+router.route("/deleteVoluntario/:cpf").delete(auth, deleteVoluntario);
 
 export default router;
