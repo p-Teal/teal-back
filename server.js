@@ -11,10 +11,12 @@ import mongoSanitize from "express-mongo-sanitize";
 import cookieParser from "cookie-parser";
 
 import authRouter from "./routes/authRoutes.js";
+import animalRouter from "./routes/animalRoutes.js";
 
 // middlewares
 import notFoundMiddleware from "./middleware/not-found.js";
 import errorMiddleware from "./middleware/error-middle.js";
+import auth from "./middleware/auth-middle.js";
 
 const app = express();
 dotenv.config();
@@ -50,6 +52,7 @@ app.get("/api/v1", (req, res) => {
 });
 
 app.use("/api/v1/voluntario", authRouter);
+app.use("/api/v1/animal", auth, animalRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

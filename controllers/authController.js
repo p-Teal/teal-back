@@ -59,7 +59,7 @@ const login = async (req, res) => {
   }
 
   if (!voluntario.ativo) {
-    throw new AuthError(
+    throw new BadReqError(
       "Voluntário não está ativo, entre em contato com o administrador."
     );
   }
@@ -103,7 +103,7 @@ const updateVoluntario = async (req, res) => {
   });
 
   if (!voluntario) {
-    throw new AuthError("Voluntário não encontrado");
+    throw new BadReqError("Voluntário não encontrado");
   }
 
   if (nome) {
@@ -155,7 +155,7 @@ const getVoluntario = async (req, res) => {
   });
 
   if (!voluntario) {
-    throw new AuthError("Voluntário não encontrado");
+    throw new BadReqError("Voluntário não encontrado");
   }
 
   res.status(StatusCodes.OK).json({
@@ -202,7 +202,7 @@ const ativarVoluntario = async (req, res) => {
   });
 
   if (!voluntario) {
-    throw new AuthError("Voluntário não encontrado");
+    throw new BadReqError("Voluntário não encontrado");
   }
 
   voluntario.ativo = true;
@@ -226,7 +226,7 @@ const desativarVoluntario = async (req, res) => {
   });
 
   if (!voluntario) {
-    throw new AuthError("Voluntário não encontrado");
+    throw new BadReqError("Voluntário não encontrado");
   }
 
   voluntario.ativo = false;
@@ -269,8 +269,6 @@ const deleteVoluntario = async (req, res) => {
   if (req.voluntario.voluntarioId === voluntario._id) {
     throw new BadReqError("Ação não permitida");
   }
-
-  console.log(voluntario);
 
   await voluntario.deleteOne({
     cpf,
