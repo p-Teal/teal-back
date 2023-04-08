@@ -1,12 +1,10 @@
 import mongoose from "mongoose";
 
 const AnimalSchema = new mongoose.Schema({
-  registroAnimal: {
+  animalId: {
     type: String,
-    required: [true, "Por favor, adicione o registro do animal"],
+    required: [true, "Por favor, adicione o animalId"],
     trim: true,
-    maxlength: [50, "O registro do animal não pode ter mais que 50 caracteres"],
-    minlength: [2, "O registro do animal não pode ter menos que 2 caracteres"],
     unique: true,
   },
   apelido: {

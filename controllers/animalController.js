@@ -4,16 +4,14 @@ import { StatusCodes } from "http-status-codes";
 
 
 const createAnimal = async (req, res) => {
-  const { nome, tipo, apelido, raca, sexo, dataNascimento, castrado, dataEntrada, registroAnimal, descricao, urlFoto } = req.body;
+  const { nome, tipo, apelido, raca, sexo, dataNascimento, dataEntrada, descricao, urlFoto, animalId } = req.body;
 
-  if (!nome || !tipo || !apelido || !raca || !sexo || !castrado || !registroAnimal) {
+  if (!nome || !tipo || !apelido || !raca || !sexo || !urlFoto) {
     throw new BadReqError("Por favor, adicione todos os campos");
   }
 
-  const registroExistente = await Animal.findOne({ registroAnimal });
-
-  if (registroExistente) {
-    throw new BadReqError("Registro de animal já cadastrado");
+  if (!animalId) {
+    throw new BadReqError("Adicione o um uuid válido")
   }
 
   const animal = await Animal.create(req.body);
