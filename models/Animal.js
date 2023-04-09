@@ -11,7 +11,7 @@ const AnimalSchema = new mongoose.Schema({
     type: String,
     required: [true, "Por favor, adicione o apelido"],
     trim: true,
-    maxlength: [50, "O apelido não pode ter mais que 50 caracteres"],
+    maxlength: [20, "O apelido não pode ter mais que 20 caracteres"],
     minlength: [2, "O apelido não pode ter menos que 2 caracteres"],
   },
   nome: {
@@ -48,11 +48,13 @@ const AnimalSchema = new mongoose.Schema({
   castrado: {
     type: Boolean,
     required: [true, "Por favor, adicione se o animal está castrado"],
+    default: false,
   },
   dataEntrada: {
     type: String,
     trim: true,
-    length: [10, "A data de entrada não pode ter mais que 10 caracteres"],
+    required: [true, "Por favor, adicione a data de entrada"],
+    length: [10, "A data de entrada precisa ter 10 caracteres"],
   },
   status: {
     type: String,

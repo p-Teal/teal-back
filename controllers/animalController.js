@@ -6,8 +6,8 @@ import { StatusCodes } from "http-status-codes";
 const createAnimal = async (req, res) => {
   const { nome, tipo, apelido, raca, sexo, dataNascimento, dataEntrada, descricao, urlFoto, animalId } = req.body;
 
-  if (!nome || !tipo || !apelido || !raca || !sexo || !urlFoto) {
-    throw new BadReqError("Por favor, adicione todos os campos");
+  if (!nome || !tipo || !apelido || !raca || !sexo || !urlFoto || !dataEntrada) {
+    throw new BadReqError("Por favor, adicione todos os campos obrigatórios");
   }
 
   if (!animalId) {
