@@ -12,6 +12,7 @@ import cookieParser from "cookie-parser";
 
 import authRouter from "./routes/authRoutes.js";
 import animalRouter from "./routes/animalRoutes.js";
+import doacaoRouter from "./routes/doacaoRoutes.js";
 
 // middlewares
 import notFoundMiddleware from "./middleware/not-found.js";
@@ -28,10 +29,16 @@ if (process.env.NODE_ENV === "dev") {
 const port = process.env.PORT || 5000;
 
 app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', process.env.FRONTEND_URL);
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
 
@@ -53,6 +60,7 @@ app.get("/api/v1", (req, res) => {
 
 app.use("/api/v1/voluntario", authRouter);
 app.use("/api/v1/animal", auth, animalRouter);
+app.use("/api/v1/doacao", auth, doacaoRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
