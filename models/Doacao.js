@@ -8,6 +8,13 @@ const DoacaoSchema = new mongoose.Schema({
     maxlength: [50, "O remetente não pode ter mais que 50 caracteres"],
     minlength: [5, "O remetente não pode ter menos que 5 caracteres"],
   },
+  contato: {
+    type: String,
+    required: [true, "Por favor, adicione o contato"],
+    trim: true,
+    maxlength: [50, "O contato não pode ter mais que 50 caracteres"],
+    minlength: [5, "O contato não pode ter menos que 5 caracteres"],
+  },
   item: {
     type: String,
     required: [true, "Por favor, adicione o item"],
