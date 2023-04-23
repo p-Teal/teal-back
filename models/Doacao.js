@@ -26,7 +26,7 @@ const DoacaoSchema = new mongoose.Schema({
     type: String,
     required: [true, "Por favor, adicione a quantidade"],
     trim: true,
-    maxlength: [10, "A quantidade não pode ter mais que 10 caracteres"],
+    maxlength: [20, "A quantidade não pode ter mais que 20 caracteres"],
     minlength: [1, "A quantidade não pode ter menos que 1 caracteres"],
   },
   data: {

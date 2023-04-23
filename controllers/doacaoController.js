@@ -3,9 +3,9 @@ import { StatusCodes } from "http-status-codes";
 import { BadReqError, AuthError } from "../errors/index.js";
 
 const createDoacao = async (req, res) => {
-  const { remetente, item, quantidade, data } = req.body;
+  const { remetente, item, quantidade, data, contato } = req.body;
 
-  if (!remetente || !item || !quantidade || !data) {
+  if (!remetente || !item || !quantidade || !data || !contato) {
     throw new BadReqError("Por favor, adicione todos os campos obrigatórios");
   }
 
