@@ -13,6 +13,7 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routes/authRoutes.js";
 import animalRouter from "./routes/animalRoutes.js";
 import doacaoRouter from "./routes/doacaoRoutes.js";
+import tutorRouter from "./routes/tutorRoutes.js";
 
 // middlewares
 import notFoundMiddleware from "./middleware/not-found.js";
@@ -61,6 +62,7 @@ app.get("/api/v1", (req, res) => {
 app.use("/api/v1/voluntario", authRouter);
 app.use("/api/v1/animal", auth, animalRouter);
 app.use("/api/v1/doacao", auth, doacaoRouter);
+app.use("/api/v1/tutor", auth, tutorRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
