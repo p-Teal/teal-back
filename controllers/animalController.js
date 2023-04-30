@@ -9,11 +9,10 @@ const createAnimal = async (req, res) => {
     apelido,
     raca,
     sexo,
-    dataNascimento,
     dataEntrada,
-    descricao,
     urlFoto,
     animalId,
+    porte,
   } = req.body;
 
   if (
@@ -23,7 +22,8 @@ const createAnimal = async (req, res) => {
     !raca ||
     !sexo ||
     !urlFoto ||
-    !dataEntrada
+    !dataEntrada ||
+    !porte
   ) {
     throw new BadReqError("Por favor, adicione todos os campos obrigatórios");
   }
@@ -50,4 +50,20 @@ const getAnimais = async (req, res) => {
   });
 };
 
-export { createAnimal, getAnimais };
+const getAnimal = async (req, res) => {
+  const { id } = req.params;
+
+  const animal = await Animal.findOne(
+    { animalId: id },
+  );
+
+  if (!animal) {
+    throw new BadReqError("Animal não encontrado");
+  }
+
+  res.status(StatusCodes.OK).json({
+    animal,
+  });
+};
+
+export { createAnimal, getAnimais, getAnimal };

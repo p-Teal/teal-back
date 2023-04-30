@@ -62,6 +62,12 @@ const AnimalSchema = new mongoose.Schema({
     enum: ["adotado", "disponível", "em tratamento", "nao disponível"],
     default: "disponível",
   },
+  porte: {
+    type: String,
+    trim: true,
+    required: [true, "Por favor, adicione o porte"],
+    enum: ["pequeno", "médio", "grande"],
+  },
   descricao: {
     type: String,
     trim: true,
