@@ -66,4 +66,28 @@ const getAnimal = async (req, res) => {
   });
 };
 
-export { createAnimal, getAnimais, getAnimal };
+const updateFoto = async (req, res) => {
+  const { id } = req.params;
+
+  const animal = await Animal.findOne(
+    { animalId: id },
+  );
+
+  if (!animal) {
+    throw new BadReqError("Animal não encontrado");
+  }
+
+  const { urlFoto } = req.body;
+
+  if (!urlFoto) {
+    throw new BadReqError("Adicione uma url válida");
+  }
+
+  animal.urlFoto = urlFoto;
+
+  await animal.save();
+
+  res.status(StatusCodes.NO_CONTENT).send();
+};
+
+export { createAnimal, getAnimais, getAnimal, updateFoto };

@@ -75,6 +75,7 @@ const AnimalSchema = new mongoose.Schema({
   },
   urlFoto: {
     type: String,
+    required: [true, "Por favor, adicione a url da foto"],
     trim: true,
   },
   createdAt: {
