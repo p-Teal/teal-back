@@ -27,8 +27,8 @@ const createTutor = async (req, res) => {
     !tipoMoradia ||
     !tamanhoFamilia ||
     !profissao ||
-    !numCriancas ||
-    !numAnimais
+    (!numCriancas && numCriancas !== 0) ||
+    (!numAnimais && numAnimais !== 0)
   ) {
     throw new BadReqError("Por favor, adicione todos os campos obrigatórios");
   }
