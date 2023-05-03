@@ -59,7 +59,7 @@ const AnimalSchema = new mongoose.Schema({
   status: {
     type: String,
     trim: true,
-    enum: ["adotado", "disponível", "em tratamento", "nao disponível"],
+    enum: ["adotado", "disponível", "em tratamento", "não disponível"],
     default: "disponível",
   },
   porte: {
@@ -83,6 +83,5 @@ const AnimalSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
-
 
 export default mongoose.model("Animal", AnimalSchema);
