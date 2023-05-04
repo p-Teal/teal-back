@@ -14,6 +14,7 @@ import authRouter from "./routes/authRoutes.js";
 import animalRouter from "./routes/animalRoutes.js";
 import doacaoRouter from "./routes/doacaoRoutes.js";
 import tutorRouter from "./routes/tutorRoutes.js";
+import registroRouter from "./routes/registroRoutes.js";
 
 // middlewares
 import notFoundMiddleware from "./middleware/not-found.js";
@@ -56,13 +57,14 @@ app.use(xss());
 app.use(mongoSanitize());
 
 app.get("/api/v1", (req, res) => {
-  res.json({ mensagem: "API V1" });
+  res.json({ mensagem: "ONG API" });
 });
 
 app.use("/api/v1/voluntario", authRouter);
 app.use("/api/v1/animal", auth, animalRouter);
 app.use("/api/v1/doacao", auth, doacaoRouter);
 app.use("/api/v1/tutor", auth, tutorRouter);
+app.use("/api/v1/registro", auth, registroRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

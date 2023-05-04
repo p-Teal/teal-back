@@ -46,16 +46,6 @@ const RegistroSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  vencimento: {
-    type: String,
-    trim: true,
-    length: [10, "A data de vencimento precisa ter 10 caracteres"],
-  },
-  valor: {
-    type: Number,
-    trim: true,
-    min: [0, "O valor não pode ser menor que 0"],
-  },
 });
 
 export default mongoose.model("Registro", RegistroSchema)
