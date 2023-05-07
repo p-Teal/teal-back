@@ -27,12 +27,21 @@ const createRegistro = async (req, res) => {
 const getRegistrosByAnimalId = async (req, res) => {
   const { id } = req.params;
 
+  if (!id) {
+    throw new BadReqError("Adicione um id válido");
+  }
+
   const registros = await Registro.find({
     animalId: id,
   }).sort({ createdAt: -1 });
 
+  const total = await Registro.countDocuments({
+    animalId: id,
+  });
+
   res.status(StatusCodes.OK).json({
     registros,
+    totalRegistros: total,
   });
 };
 

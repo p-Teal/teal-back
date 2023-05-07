@@ -29,7 +29,7 @@ const RegistroSchema = new mongoose.Schema({
     type: String,
     required: [true, "Por favor, adicione o tipo"],
     trim: true,
-    enum: ["veterinário", "vacina", "banho", "tosa", "outro"],
+    enum: ["veterinário", "vacina", "banho", "tosa", "medicação", "outro"],
   },
   observacao: {
     type: String,
