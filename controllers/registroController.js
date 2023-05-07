@@ -14,7 +14,7 @@ const createRegistro = async (req, res) => {
   });
 
   if (!animal || animal.status === "adotado") {
-    throw new BadReqError("Animal não encontrado ou não disponível");
+    throw new BadReqError("Animal não encontrado ou não disponível para editar");
   }
 
   const registro = await Registro.create(req.body);
