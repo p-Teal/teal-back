@@ -53,9 +53,7 @@ const getAnimais = async (req, res) => {
 const getAnimal = async (req, res) => {
   const { id } = req.params;
 
-  const animal = await Animal.findOne(
-    { animalId: id },
-  );
+  const animal = await Animal.findOne({ animalId: id });
 
   if (!animal) {
     throw new BadReqError("Animal não encontrado");
@@ -69,9 +67,7 @@ const getAnimal = async (req, res) => {
 const updateFoto = async (req, res) => {
   const { id } = req.params;
 
-  const animal = await Animal.findOne(
-    { animalId: id },
-  );
+  const animal = await Animal.findOne({ animalId: id });
 
   if (!animal) {
     throw new BadReqError("Animal não encontrado");
@@ -90,4 +86,56 @@ const updateFoto = async (req, res) => {
   res.status(StatusCodes.NO_CONTENT).send();
 };
 
-export { createAnimal, getAnimais, getAnimal, updateFoto };
+const updateAnimal = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    throw new BadReqError("Adicione um id válido");
+  }
+
+  const {
+    nome,
+    apelido,
+    raca,
+    dataEntrada,
+    dataNascimento,
+    status,
+    porte,
+    descricao,
+    castrado,
+  } = req.body;
+
+  if (
+    !nome ||
+    !apelido ||
+    !raca ||
+    !dataEntrada ||
+    !porte ||
+    !status ||
+    (!castrado && castrado !== false)
+  ) {
+    throw new BadReqError("Por favor, adicione todos os campos obrigatórios");
+  }
+
+  const animal = await Animal.findOne({ animalId: id });
+
+  if (!animal) {
+    throw new BadReqError("Animal não encontrado");
+  }
+
+  animal.nome = nome;
+  animal.apelido = apelido;
+  animal.raca = raca;
+  animal.dataEntrada = dataEntrada;
+  dataNascimento ? (animal.dataNascimento = dataNascimento) : (animal.dataNascimento = undefined);
+  animal.status = status;
+  animal.porte = porte;
+  descricao ? (animal.descricao = descricao) : (animal.descricao = undefined);
+  animal.castrado = castrado;
+
+  await animal.save();
+
+  res.status(StatusCodes.NO_CONTENT).send();
+};
+
+export { createAnimal, getAnimais, getAnimal, updateFoto, updateAnimal };
