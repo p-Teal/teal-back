@@ -71,4 +71,22 @@ const deleteTutor = async (req, res) => {
   res.status(StatusCodes.NO_CONTENT).send();
 }
 
-export { createTutor, getTutores, deleteTutor };
+const getTutor = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    throw new BadReqError("Adicione um id válido");
+  }
+
+  const tutor = await Tutor.findById(id);
+
+  if (!tutor) {
+    throw new BadReqError("Tutor não encontrado");
+  }
+
+  res.status(StatusCodes.OK).json({
+    tutor,
+  });
+}
+
+export { createTutor, getTutores, deleteTutor, getTutor };

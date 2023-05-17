@@ -9,7 +9,14 @@ const auth = async (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
+    // console.log(payload, 'payload');
     req.voluntario = { voluntarioId: payload.voluntarioId };
+    req.admin = payload.admin;
+    req.ativo = payload.ativo;
+
+    if (!req.ativo) {
+      throw new AuthError("Conta inativa");
+    }
     next();
   } catch (error) {
     throw new AuthError("Autenticação necessária");

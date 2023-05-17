@@ -100,6 +100,8 @@ VoluntarioSchema.methods.createJWT = function () {
   return jwt.sign(
     {
       voluntarioId: this._id,
+      admin: this.admin,
+      ativo: this.ativo,
     },
     process.env.JWT_SECRET,
     {
