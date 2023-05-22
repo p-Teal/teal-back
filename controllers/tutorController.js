@@ -69,7 +69,7 @@ const deleteTutor = async (req, res) => {
   });
 
   res.status(StatusCodes.NO_CONTENT).send();
-}
+};
 
 const getTutor = async (req, res) => {
   const { id } = req.params;
@@ -87,6 +87,76 @@ const getTutor = async (req, res) => {
   res.status(StatusCodes.OK).json({
     tutor,
   });
-}
+};
 
-export { createTutor, getTutores, deleteTutor, getTutor };
+const updateTutor = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    throw new BadReqError("Adicione um id válido");
+  }
+
+  const tutor = await Tutor.findById(id);
+
+  if (!tutor) {
+    throw new BadReqError("Tutor não encontrado");
+  }
+
+  const {
+    cpf,
+    nome,
+    telefone,
+    endereco,
+    cidade,
+    estado,
+    tipoMoradia,
+    tamanhoFamilia,
+    profissao,
+    numCriancas,
+    numAnimais,
+    status,
+    email,
+    descricao,
+    dataNascimento,
+  } = req.body;
+
+  if (
+    !cpf ||
+    !nome ||
+    !telefone ||
+    !endereco ||
+    !cidade ||
+    !estado ||
+    !tipoMoradia ||
+    !tamanhoFamilia ||
+    !profissao ||
+    (!numCriancas && numCriancas !== 0) ||
+    (!numAnimais && numAnimais !== 0) ||
+    !status
+  ) {
+    throw new BadReqError("Por favor, adicione todos os campos obrigatórios");
+  }
+
+  tutor.nome = nome;
+  tutor.telefone = telefone;
+  tutor.endereco = endereco;
+  tutor.cidade = cidade;
+  tutor.estado = estado;
+  tutor.tipoMoradia = tipoMoradia;
+  tutor.tamanhoFamilia = tamanhoFamilia;
+  tutor.profissao = profissao;
+  tutor.numCriancas = numCriancas;
+  tutor.numAnimais = numAnimais;
+  tutor.status = status;
+  email ? (tutor.email = email) : (tutor.email = undefined);
+  descricao ? (tutor.descricao = descricao) : (tutor.descricao = undefined);
+  dataNascimento
+    ? (tutor.dataNascimento = dataNascimento)
+    : (tutor.dataNascimento = undefined);
+
+  await tutor.save();
+
+  res.status(StatusCodes.NO_CONTENT).send();
+};
+
+export { createTutor, getTutores, deleteTutor, getTutor, updateTutor };
