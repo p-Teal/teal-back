@@ -1,6 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import Registro from "../models/Registro.js";
 import Animal from "../models/Animal.js";
+import { BadReqError, AuthError } from "../errors/index.js";
 
 const createRegistro = async (req, res) => {
   const { registroId, animalId, titulo, data, tipo, observacao } = req.body;
@@ -14,7 +15,9 @@ const createRegistro = async (req, res) => {
   });
 
   if (!animal || animal.status === "adotado") {
-    throw new BadReqError("Animal não encontrado ou não disponível para editar");
+    throw new BadReqError(
+      "Animal não encontrado ou não disponível para editar"
+    );
   }
 
   const registro = await Registro.create(req.body);

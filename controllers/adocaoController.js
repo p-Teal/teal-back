@@ -2,6 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import Adocao from "../models/Adocao.js";
 import Animal from "../models/Animal.js";
 import Tutor from "../models/Tutor.js";
+import { BadReqError, AuthError } from "../errors/index.js";
 
 const createAdocao = async (req, res) => {
   const { animalId, cpf, dataAdocao } = req.body;
@@ -118,4 +119,40 @@ const apagarAdocao = async (req, res) => {
   res.status(StatusCodes.NO_CONTENT).send();
 };
 
-export { createAdocao, getAdocoes, cancelarAdocao, apagarAdocao };
+const getAnimaisDisponiveis = async (req, res) => {
+  const animais = await Animal.find({ status: "disponível" });
+
+  res.status(StatusCodes.OK).json({
+    animais,
+  });
+};
+
+const getTutorAprovadoByCpf = async (req, res) => {
+  const { cpf } = req.params;
+
+  if (!cpf) {
+    throw new BadReqError("Adicione um cpf válido");
+  }
+
+  const tutor = await Tutor.findOne({
+    cpf: cpf,
+    status: "aprovado",
+  });
+
+  if (!tutor) {
+    throw new BadReqError("Tutor não encontrado ou não aprovado");
+  }
+
+  res.status(StatusCodes.OK).json({
+    tutor,
+  });
+};
+
+export {
+  createAdocao,
+  getAdocoes,
+  cancelarAdocao,
+  apagarAdocao,
+  getAnimaisDisponiveis,
+  getTutorAprovadoByCpf,
+};
