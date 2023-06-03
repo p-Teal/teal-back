@@ -16,6 +16,7 @@ import doacaoRouter from "./routes/doacaoRoutes.js";
 import tutorRouter from "./routes/tutorRoutes.js";
 import registroRouter from "./routes/registroRoutes.js";
 import adococaoRouter from "./routes/adocaoRoutes.js";
+import statsRouter from "./routes/statsRoutes.js";
 
 // middlewares
 import notFoundMiddleware from "./middleware/not-found.js";
@@ -67,6 +68,7 @@ app.use("/api/v1/doacao", auth, doacaoRouter);
 app.use("/api/v1/tutor", auth, tutorRouter);
 app.use("/api/v1/registro", auth, registroRouter);
 app.use("/api/v1/adocao", auth, adococaoRouter);
+app.use("/api/v1/stats", auth, statsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
