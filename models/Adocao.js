@@ -50,6 +50,11 @@ const AdocaoSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  observacao: {
+    type: String,
+    trim: true,
+    maxlength: [200, "A observação não pode ter mais que 200 caracteres"],
+  },
 });
 
 export default mongoose.model("Adocao", AdocaoSchema, "adocoes");

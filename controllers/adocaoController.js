@@ -5,7 +5,7 @@ import Tutor from "../models/Tutor.js";
 import { BadReqError, AuthError } from "../errors/index.js";
 
 const createAdocao = async (req, res) => {
-  const { animalId, cpf, dataAdocao } = req.body;
+  const { animalId, cpf, dataAdocao, observacao } = req.body;
 
   if (!animalId || !cpf || !dataAdocao) {
     throw new BadReqError("Por favor, adicione todos os campos obrigatórios");
@@ -37,6 +37,10 @@ const createAdocao = async (req, res) => {
     nome: tutor.nome,
     dataAdocao: dataAdocao,
   };
+
+  if (observacao) {
+    adocaoObj.observacao = observacao;
+  }
 
   const adocao = await Adocao.create(adocaoObj);
 
