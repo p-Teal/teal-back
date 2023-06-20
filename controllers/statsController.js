@@ -100,7 +100,7 @@ const getStats = async (req, res) => {
       case "gato":
         animaisGato = tipoCount.count;
         break;
-      case "outros":
+      case "outro":
         animaisOutros = tipoCount.count;
         break;
     }
