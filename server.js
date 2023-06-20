@@ -48,7 +48,10 @@ const port = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: [process.env.FRONTEND_URL,
+      "https://teal-ong.vercel.app",
+      "http://localhost:3001"
+    ],
     credentials: true,
   })
 );
