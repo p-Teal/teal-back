@@ -1,5 +1,7 @@
 import { BadReqError, AuthError } from "../errors/index.js";
 import Animal from "../models/Animal.js";
+import Registro from "../models/Registro.js";
+import Adocao from "../models/Adocao.js";
 import { StatusCodes } from "http-status-codes";
 
 const createAnimal = async (req, res) => {
@@ -138,4 +140,32 @@ const updateAnimal = async (req, res) => {
   res.status(StatusCodes.NO_CONTENT).send();
 };
 
-export { createAnimal, getAnimais, getAnimal, updateFoto, updateAnimal };
+
+const deleteAnimal = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    throw new BadReqError("Adicione um id válido");
+  }
+
+  const animal = await Animal.findOne({ animalId: id });
+
+  if (!animal) {
+    throw new BadReqError("Animal não encontrado");
+  }
+
+  const animalId = animal.animalId;
+
+  // delete registros com animalId
+  await Registro.deleteMany({ animalId });
+
+  // delete adocoes com animalId
+  await Adocao.deleteMany({ animalId });
+
+  // delete animal
+  await Animal.findOneAndDelete({ animalId });
+
+  res.status(StatusCodes.NO_CONTENT).send();
+}
+
+export { createAnimal, getAnimais, getAnimal, updateFoto, updateAnimal, deleteAnimal };
