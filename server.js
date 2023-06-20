@@ -32,19 +32,11 @@ if (process.env.NODE_ENV === "dev") {
 
 const port = process.env.PORT || 5000;
 
-// app.use(function (req, res, next) {
-//   res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-//   );
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "X-Requested-With,content-type"
-//   );
-//   res.setHeader("Access-Control-Allow-Credentials", true);
-//   next();
-// });
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL, "https://teal-ong.vercel.app", "http://localhost:3001");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
 
 app.use(
   cors({
