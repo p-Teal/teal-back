@@ -46,12 +46,12 @@ const port = process.env.PORT || 5000;
 //   next();
 // });
 
-// app.use(
-//   cors({
-//     origin: process.env.FRONTEND_URL,
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
 
 app.use(cors());
 app.use(express.json());
