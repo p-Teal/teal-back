@@ -4,6 +4,7 @@ const attachCookie = ({ res, token }) => {
   res.cookie("token", token, {
     expires: new Date(Date.now() + oneDayToMs),
     secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   });
 };
 
